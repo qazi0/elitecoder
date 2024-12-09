@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		C77AB1C72D078A2D00AE093B /* .cursorrules in Resources */ = {isa = PBXBuildFile; fileRef = C77AB1C52D078A1000AE093B /* .cursorrules */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		C77AB1A92D07895000AE093B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		C77AB1982D07894D00AE093B /* EliteCoderiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EliteCoderiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C77AB1A82D07895000AE093B /* EliteCoderiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EliteCoderiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C77AB1B22D07895000AE093B /* EliteCoderiOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EliteCoderiOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C77AB1C52D078A1000AE093B /* .cursorrules */ = {isa = PBXFileReference; lastKnownFileType = text; path = .cursorrules; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -79,6 +84,7 @@
 				C77AB1AB2D07895000AE093B /* EliteCoderiOSTests */,
 				C77AB1B52D07895000AE093B /* EliteCoderiOSUITests */,
 				C77AB1992D07894D00AE093B /* Products */,
+				C77AB1C52D078A1000AE093B /* .cursorrules */,
 			);
 			sourceTree = "<group>";
 		};
@@ -212,6 +218,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C77AB1C72D078A2D00AE093B /* .cursorrules in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
