@@ -139,12 +139,34 @@ class CodeforcesAPI {
             throw APIError.networkError
         }
         
+        // Create a separate type for API response
+        struct APIRatingChange: Codable {
+            let contestId: Int
+            let contestName: String
+            let rank: Int
+            let oldRating: Int
+            let newRating: Int
+            let ratingUpdateTimeSeconds: Int
+        }
+        
         struct Response: Codable {
             let status: String
-            let result: [UserProfile.RatingChange]
+            let result: [APIRatingChange]
         }
         
         let decodedResponse = try JSONDecoder().decode(Response.self, from: data)
-        return decodedResponse.result
+        
+        // Map API response to our model
+        return decodedResponse.result.map { apiRating in
+            UserProfile.RatingChange(
+                id: apiRating.contestId,
+                contestId: apiRating.contestId,
+                contestName: apiRating.contestName,
+                rank: apiRating.rank,
+                ratingUpdate: apiRating.oldRating,
+                newRating: apiRating.newRating,
+                timestamp: Date(timeIntervalSince1970: TimeInterval(apiRating.ratingUpdateTimeSeconds))
+            )
+        }
     }
 } 

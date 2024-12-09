@@ -34,17 +34,32 @@ class ProfileViewModel: ObservableObject {
                 contestsParticipated: ratings.count,
                 maxRating: user.maxRating,
                 currentRating: user.rating,
-                contribution: 0 // You might want to fetch this separately
+                contribution: user.contribution
             )
             
+            // Convert API rating changes to our model
+            let ratingHistory = ratings.map { rating in
+                UserProfile.RatingChange(
+                    id: rating.id,
+                    contestId: rating.contestId,
+                    contestName: rating.contestName,
+                    rank: rating.rank,
+                    ratingUpdate: rating.ratingUpdate,
+                    newRating: rating.newRating,
+                    timestamp: rating.timestamp
+                )
+            }
+            
+            // Create user profile
             userProfile = UserProfile(
                 user: user,
                 statistics: statistics,
-                ratingHistory: ratings,
-                recentActivity: submissions
+                ratingHistory: ratingHistory,
+                recentActivity: Array(submissions.prefix(10))
             )
         } catch {
             self.error = error
+            print("Error loading profile: \(error)")
         }
     }
     

@@ -1,20 +1,32 @@
 import Foundation
 
-struct UserProfile: Codable {
+struct UserProfile {
     let user: User
     let statistics: UserStatistics
     let ratingHistory: [RatingChange]
     let recentActivity: [Submission]
     
-    struct UserStatistics: Codable {
+    struct UserStatistics {
         let totalSolved: Int
         let contestsParticipated: Int
         let maxRating: Int
         let currentRating: Int
         let contribution: Int
+        
+        init(totalSolved: Int = 0,
+             contestsParticipated: Int = 0,
+             maxRating: Int = 0,
+             currentRating: Int = 0,
+             contribution: Int = 0) {
+            self.totalSolved = totalSolved
+            self.contestsParticipated = contestsParticipated
+            self.maxRating = maxRating
+            self.currentRating = currentRating
+            self.contribution = contribution
+        }
     }
     
-    struct RatingChange: Codable, Identifiable {
+    struct RatingChange: Identifiable {
         let id: Int
         let contestId: Int
         let contestName: String
@@ -23,27 +35,27 @@ struct UserProfile: Codable {
         let newRating: Int
         let timestamp: Date
         
-        enum CodingKeys: String, CodingKey {
-            case id = "id"
-            case contestId = "contestId"
-            case contestName
-            case rank
-            case ratingUpdate = "oldRating"
-            case newRating
-            case timestamp = "ratingUpdateTimeSeconds"
-        }
-        
-        init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            let contestId = try container.decode(Int.self, forKey: .contestId)
-            self.id = contestId
+        init(id: Int,
+             contestId: Int,
+             contestName: String,
+             rank: Int,
+             ratingUpdate: Int,
+             newRating: Int,
+             timestamp: Date) {
+            self.id = id
             self.contestId = contestId
-            contestName = try container.decode(String.self, forKey: .contestName)
-            rank = try container.decode(Int.self, forKey: .rank)
-            newRating = try container.decode(Int.self, forKey: .newRating)
-            ratingUpdate = try container.decode(Int.self, forKey: .ratingUpdate)
-            let timeSeconds = try container.decode(Int.self, forKey: .timestamp)
-            timestamp = Date(timeIntervalSince1970: TimeInterval(timeSeconds))
+            self.contestName = contestName
+            self.rank = rank
+            self.ratingUpdate = ratingUpdate
+            self.newRating = newRating
+            self.timestamp = timestamp
         }
+    }
+    
+    init(user: User, statistics: UserStatistics, ratingHistory: [RatingChange], recentActivity: [Submission]) {
+        self.user = user
+        self.statistics = statistics
+        self.ratingHistory = ratingHistory
+        self.recentActivity = recentActivity
     }
 } 
