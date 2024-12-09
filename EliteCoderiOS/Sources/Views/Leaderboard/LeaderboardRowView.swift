@@ -5,32 +5,33 @@ struct LeaderboardRowView: View {
     let rank: Int
     
     var body: some View {
-        HStack(spacing: Constants.UI.defaultPadding) {
+        HStack {
             Text("#\(rank)")
                 .font(.headline)
                 .foregroundColor(.secondary)
-                .frame(width: 40)
+                .frame(width: 50)
+            
+            AsyncImage(url: URL(string: user.avatar ?? "")) { image in
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+            } placeholder: {
+                Image(systemName: "person.circle.fill")
+                    .resizable()
+            }
+            .frame(width: 40, height: 40)
+            .clipShape(Circle())
             
             VStack(alignment: .leading) {
                 Text(user.handle)
                     .font(.headline)
-                    .foregroundColor(CodeforcesRating.getColor(for: user.rating))
-                
-                Text("Rating: \(user.rating)")
+                Text("\(user.rating) points")
                     .font(.subheadline)
-                    .foregroundColor(CodeforcesRating.getColor(for: user.rating))
+                    .foregroundColor(.secondary)
             }
             
             Spacer()
-            
-            Text(user.rank)
-                .font(.caption)
-                .padding(.horizontal, 8)
-                .padding(.vertical, 4)
-                .background(CodeforcesRating.getColor(for: user.rating))
-                .cornerRadius(Constants.UI.cornerRadius)
-                .foregroundColor(.white)
         }
-        .padding(.vertical, 4)
+        .padding(.vertical, 8)
     }
 } 

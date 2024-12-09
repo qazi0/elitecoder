@@ -37,9 +37,8 @@ struct UserDetailView: View {
     
     private var userHeader: some View {
         VStack(spacing: 12) {
-            Text(handle)
+            Text(CodeforcesRating.formatUsername(handle, rating: viewModel.user?.rating ?? 0))
                 .font(.title.bold())
-                .foregroundColor(viewModel.user.map { CodeforcesRating.getColor(for: $0.rating) } ?? .primary)
             
             if let user = viewModel.user {
                 if user.rating >= 2900 {
