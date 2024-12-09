@@ -43,6 +43,10 @@ struct User: Codable, Identifiable {
         CodeforcesRating.formatUsername(handle, rating: rating)
     }
     
+    var countryFlag: String {
+        CountryFlag.flag(for: country)
+    }
+    
     enum CodingKeys: String, CodingKey {
         case handle, rating, rank, contribution
         case firstName, lastName
