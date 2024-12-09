@@ -23,11 +23,11 @@ struct LeaderboardRowView: View {
             .clipShape(Circle())
             
             VStack(alignment: .leading) {
-                Text(user.handle)
+                Text("\(user.formattedHandle)\t\(user.rating)")
                     .font(.headline)
-                Text("\(user.rating) points")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
+//                Text("\(user.rating)")
+//                    .font(.subheadline)
+                    .foregroundColor(user.ratingColor)
             }
             
             Spacer()

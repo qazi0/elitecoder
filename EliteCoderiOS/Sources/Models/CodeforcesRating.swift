@@ -14,8 +14,8 @@ enum CodeforcesRating {
     }
     
     static let ranges: [Range] = [
-        Range(min: 2900, max: Int.max, title: "Legendary Grandmaster", color: .red, division: 1),
-        Range(min: 2600, max: 2899, title: "International Grandmaster", color: .red, division: 1),
+        Range(min: 3000, max: Int.max, title: "Legendary Grandmaster", color: .red, division: 1),
+        Range(min: 2600, max: 2999, title: "International Grandmaster", color: .red, division: 1),
         Range(min: 2400, max: 2599, title: "Grandmaster", color: .red, division: 1),
         Range(min: 2300, max: 2399, title: "International Master", color: .orange, division: 1),
         Range(min: 2200, max: 2299, title: "Master", color: .orange, division: 1),
@@ -33,7 +33,7 @@ enum CodeforcesRating {
     // Special handling for Legendary Grandmaster username
     static func formatUsername(_ username: String, rating: Int) -> AttributedString {
         var result = AttributedString(username)
-        if rating >= 2900, let firstLetterRange = result.range(of: String(username.prefix(1))) {
+        if rating >= 3000, let firstLetterRange = result.range(of: String(username.prefix(1))) {
             result[firstLetterRange].foregroundColor = .black
             let afterFirst = firstLetterRange.upperBound
             result[afterFirst...].foregroundColor = .red

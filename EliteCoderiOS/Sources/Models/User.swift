@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 struct User: Codable, Identifiable {
     let id = UUID()
@@ -34,6 +35,14 @@ struct User: Codable, Identifiable {
         Date(timeIntervalSince1970: TimeInterval(registrationTimeSeconds))
     }
     
+    var ratingColor: Color {
+        CodeforcesRating.getColor(for: rating)
+    }
+    
+    var formattedHandle: AttributedString {
+        CodeforcesRating.formatUsername(handle, rating: rating)
+    }
+    
     enum CodingKeys: String, CodingKey {
         case handle, rating, rank, contribution
         case firstName, lastName
@@ -55,9 +64,9 @@ struct User: Codable, Identifiable {
         firstName = try container.decodeIfPresent(String.self, forKey: .firstName)
         lastName = try container.decodeIfPresent(String.self, forKey: .lastName)
         rating = try container.decode(Int.self, forKey: .rating)
-        rank = try container.decode(String.self, forKey: .rank)
+        rank = try container.decode(String.self, forKey: .rank).lowercased()
         maxRating = try container.decode(Int.self, forKey: .maxRating)
-        maxRank = try container.decodeIfPresent(String.self, forKey: .maxRank) ?? "Unranked"
+        maxRank = try container.decodeIfPresent(String.self, forKey: .maxRank)?.lowercased() ?? "unranked"
         contribution = try container.decode(Int.self, forKey: .contribution)
         friendOfCount = try container.decode(Int.self, forKey: .friendOfCount)
         lastOnlineTimeSeconds = try container.decode(Int.self, forKey: .lastOnlineTimeSeconds)

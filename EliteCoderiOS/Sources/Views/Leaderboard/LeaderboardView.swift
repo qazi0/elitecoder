@@ -8,15 +8,25 @@ struct LeaderboardView: View {
             ZStack {
                 if viewModel.isLoading {
                     ProgressView()
+                } else if let error = viewModel.error {
+                    VStack {
+                        Text("Error loading leaderboard")
+                            .foregroundColor(.red)
+                        Text(error.localizedDescription)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        Button("Retry") {
+                            Task {
+                                await viewModel.fetchTopUsers()
+                            }
+                        }
+                        .buttonStyle(.bordered)
+                    }
                 } else {
                     List {
-                        ForEach(viewModel.topUsers) { user in
+                        ForEach(Array(viewModel.topUsers.enumerated()), id: \.element.id) { index, user in
                             NavigationLink(destination: UserDetailView(handle: user.handle)) {
-                                if let rank = viewModel.topUsers.firstIndex(where: { $0.id == user.id }) {
-                                    LeaderboardRowView(user: user, rank: rank + 1)
-                                } else {
-                                    Text("Rank not found")
-                                }
+                                LeaderboardRowView(user: user, rank: index + 1)
                             }
                         }
                     }
