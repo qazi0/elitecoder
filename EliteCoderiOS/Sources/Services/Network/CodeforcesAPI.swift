@@ -163,7 +163,7 @@ class CodeforcesAPI {
                 contestId: apiRating.contestId,
                 contestName: apiRating.contestName,
                 rank: apiRating.rank,
-                ratingUpdate: apiRating.oldRating,
+                ratingUpdate: apiRating.newRating - apiRating.oldRating,
                 newRating: apiRating.newRating,
                 timestamp: Date(timeIntervalSince1970: TimeInterval(apiRating.ratingUpdateTimeSeconds))
             )

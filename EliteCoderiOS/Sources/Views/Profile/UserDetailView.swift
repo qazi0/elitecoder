@@ -39,19 +39,19 @@ struct UserDetailView: View {
         VStack(spacing: 12) {
             Text(handle)
                 .font(.title.bold())
+                .foregroundColor(viewModel.user.map { CodeforcesRating.getColor(for: $0.rating) } ?? .primary)
             
             if let user = viewModel.user {
-                Text(user.rank)
-                    .font(.headline)
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 6)
-                    .background(ratingColor(for: user.rating))
-                    .cornerRadius(Constants.UI.cornerRadius)
-                    .foregroundColor(.white)
+                if user.rating >= 2900 {
+                    Text(CodeforcesRating.formatLegendaryGrandmaster())
+                } else {
+                    Text(user.rank)
+                        .foregroundColor(CodeforcesRating.getColor(for: user.rating))
+                }
                 
                 Text("Rating: \(user.rating)")
                     .font(.title3)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(CodeforcesRating.getColor(for: user.rating))
             }
         }
         .frame(maxWidth: .infinity)

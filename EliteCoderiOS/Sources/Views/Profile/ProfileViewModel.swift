@@ -7,6 +7,7 @@ class ProfileViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var error: Error?
     @Published var selectedTimeRange: TimeRange = .month
+    @Published var ratingInfo: CodeforcesRating.Range?
     
     private let api = CodeforcesAPI.shared
     
@@ -26,6 +27,9 @@ class ProfileViewModel: ObservableObject {
             async let submissionsTask = api.fetchUserSubmissions(handle: handle)
             
             let (user, ratings, submissions) = try await (userTask, ratingsTask, submissionsTask)
+            
+            // Get rating info
+            self.ratingInfo = CodeforcesRating.getRatingInfo(for: user.rating)
             
             // Calculate statistics
             let statistics = UserProfile.UserStatistics(

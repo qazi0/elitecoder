@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ProfileHeaderView: View {
     let user: User
+    let ratingInfo: CodeforcesRating.Range?
     @State private var showAllInfo = false
     
     var body: some View {
@@ -32,9 +33,18 @@ struct ProfileHeaderView: View {
                         .font(.title2)
                         .fontWeight(.bold)
                     
-                    Text(user.rank)
-                        .font(.subheadline)
-                        .foregroundColor(.blue)
+                    if let ratingInfo = ratingInfo {
+                        if user.rating >= 2900 {
+                            Text(CodeforcesRating.formatLegendaryGrandmaster())
+                        } else {
+                            Text(ratingInfo.title)
+                                .foregroundColor(ratingInfo.color)
+                        }
+                        
+                        Text("Rating: \(user.rating)")
+                            .foregroundColor(ratingInfo.color)
+                            .font(.headline)
+                    }
                 }
                 
                 Spacer()
@@ -46,14 +56,14 @@ struct ProfileHeaderView: View {
                     title: "Rating",
                     value: "\(user.rating)",
                     subtitle: "Current",
-                    color: .blue
+                    isRating: true
                 )
                 
                 StatCard(
                     title: "Max Rating",
                     value: "\(user.maxRating)",
                     subtitle: user.maxRank,
-                    color: .orange
+                    isRating: true
                 )
             }
             

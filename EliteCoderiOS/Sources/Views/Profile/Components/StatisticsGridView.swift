@@ -8,27 +8,39 @@ struct StatisticsGridView: View {
             GridItem(.flexible()),
             GridItem(.flexible())
         ], spacing: Constants.UI.defaultPadding) {
-            StatisticCardView(
+            StatCard(
                 title: "Problems Solved",
                 value: "\(statistics.totalSolved)",
+                subtitle: nil,
+                color: nil,
+                isRating: false,
                 icon: "checkmark.circle"
             )
             
-            StatisticCardView(
+            StatCard(
                 title: "Current Rating",
                 value: "\(statistics.currentRating)",
+                subtitle: nil,
+                color: nil,
+                isRating: true,
                 icon: "star.fill"
             )
             
-            StatisticCardView(
+            StatCard(
                 title: "Max Rating",
                 value: "\(statistics.maxRating)",
+                subtitle: nil,
+                color: nil,
+                isRating: true,
                 icon: "trophy.fill"
             )
             
-            StatisticCardView(
+            StatCard(
                 title: "Contests",
                 value: "\(statistics.contestsParticipated)",
+                subtitle: nil,
+                color: nil,
+                isRating: false,
                 icon: "flag.fill"
             )
         }

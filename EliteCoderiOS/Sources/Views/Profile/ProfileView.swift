@@ -9,7 +9,10 @@ struct ProfileView: View {
             ScrollView {
                 if let profile = viewModel.userProfile {
                     VStack(spacing: 16) {
-                        ProfileHeaderView(user: profile.user)
+                        ProfileHeaderView(
+                            user: profile.user,
+                            ratingInfo: viewModel.ratingInfo
+                        )
                         
                         Divider()
                         
