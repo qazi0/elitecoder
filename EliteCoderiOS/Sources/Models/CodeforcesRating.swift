@@ -27,6 +27,19 @@ enum CodeforcesRating {
         Range(min: 0, max: 1199, title: "Newbie", color: Color.gray.opacity(0.5), division: 2)
     ]
     
+    static let backgroundRanges: [Range] = [
+        Range(min: 3000, max: 10000, title: "Legendary Grandmaster", color: Color.red.opacity(1.0), division: 1),
+        Range(min: 2600, max: 2999, title: "International Grandmaster", color: Color.red.opacity(1.0), division: 1),
+        Range(min: 2400, max: 2599, title: "Grandmaster", color: Color.red.opacity(1.0), division: 1),
+        Range(min: 2300, max: 2399, title: "International Master", color: Color.orange.opacity(1.0), division: 1),
+        Range(min: 2100, max: 2299, title: "Master", color: Color.orange.opacity(1.0), division: 1),
+        Range(min: 1900, max: 2099, title: "Candidate Master", color: Color.purple.opacity(1.0), division: 1),
+        Range(min: 1600, max: 1899, title: "Expert", color: Color.blue.opacity(1.0), division: 2),
+        Range(min: 1400, max: 1599, title: "Specialist", color: Color.cyan.opacity(1.0), division: 2),
+        Range(min: 1200, max: 1399, title: "Pupil", color: Color.green.opacity(1.0), division: 2),
+        Range(min: 0, max: 1199, title: "Newbie", color: Color.gray.opacity(1.0), division: 2)
+    ]
+    
     static func getRatingInfo(for rating: Int) -> Range {
         ranges.first { $0.contains(rating) } ?? ranges.last!
     }

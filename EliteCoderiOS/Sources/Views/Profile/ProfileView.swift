@@ -5,7 +5,7 @@ struct ProfileView: View {
     let handle: String
     @StateObject private var viewModel: ProfileViewModel
     
-    init(handle: String = "tourist") { // Default value for backward compatibility
+    init(handle: String = "tourist") {
         self.handle = handle
         _viewModel = StateObject(wrappedValue: ProfileViewModel())
     }
@@ -13,25 +13,48 @@ struct ProfileView: View {
     var body: some View {
         ScrollView {
             if let profile = viewModel.userProfile {
-                VStack(spacing: 16) {
+                VStack(spacing: 20) {
+                    // Profile Header
                     ProfileHeaderView(
                         user: profile.user,
                         ratingInfo: viewModel.ratingInfo
                     )
+                    .padding(.horizontal)
                     
                     Divider()
+                        .padding(.horizontal)
                     
                     // Statistics Grid
-                    StatisticsGridView(statistics: profile.statistics)
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("Statistics")
+                            .font(.headline)
+                            .padding(.horizontal)
+                        
+                        StatisticsGridView(statistics: profile.statistics)
+                            .padding(.horizontal)
+                    }
                     
-                    // Rating Graph
-                    RatingGraphView(ratingHistory: profile.ratingHistory)
-                        .frame(height: 200)
+                    // Rating Graph Section
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("Performance")
+                            .font(.headline)
+                            .padding(.horizontal)
+                        
+                        RatingGraphView(ratingHistory: profile.ratingHistory)
+                            .padding(.horizontal)
+                    }
                     
-                    // Recent Activity
-                    RecentSubmissionsView(submissions: profile.recentActivity)
+                    // Recent Activity Section
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("Recent Activity")
+                            .font(.headline)
+                            .padding(.horizontal)
+                        
+                        RecentSubmissionsView(submissions: profile.recentActivity)
+                            .padding(.horizontal)
+                    }
                 }
-                .padding()
+                .padding(.vertical)
             } else if viewModel.isLoading {
                 ProgressView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)

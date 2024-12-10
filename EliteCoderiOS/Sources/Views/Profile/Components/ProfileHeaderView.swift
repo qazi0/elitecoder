@@ -9,11 +9,12 @@ struct ProfileHeaderView: View {
         VStack(spacing: 16) {
             // Profile Image and Basic Info
             HStack(alignment: .top, spacing: 20) {
-                // Profile Image
+                // Profile Image with animation
                 AsyncImage(url: URL(string: user.avatar ?? "")) { image in
                     image
                         .resizable()
                         .scaledToFill()
+                        .transition(.opacity)
                 } placeholder: {
                     Image(systemName: "person.circle.fill")
                         .resizable()
@@ -21,111 +22,96 @@ struct ProfileHeaderView: View {
                 }
                 .frame(width: 100, height: 100)
                 .clipShape(Circle())
+                .overlay(Circle().stroke(ratingInfo?.color ?? .gray, lineWidth: 2))
+                .shadow(radius: 5)
                 
-                // Basic Info
+                // Basic Info with improved typography
                 VStack(alignment: .leading, spacing: 8) {
                     if let fullName = user.fullName {
                         Text(fullName)
                             .font(.headline)
+                            .foregroundColor(.secondary)
                     }
                     
                     HStack {
                         if !user.countryFlag.isEmpty {
                             Text(user.countryFlag)
+                                .font(.title2)
                         }
                         
                         Text(user.formattedHandle)
-                            .font(.title2)
+                            .font(.title)
                             .fontWeight(.bold)
                     }
                     
                     if let ratingInfo = ratingInfo {
-                        if user.rating >= 2900 {
+                        if user.rating >= 3000 {
                             Text(CodeforcesRating.formatLegendaryGrandmaster())
+                                .font(.headline)
                         } else {
                             Text(ratingInfo.title)
+                                .font(.headline)
                                 .foregroundColor(ratingInfo.color)
                         }
-                        
-                        Text("Rating: \(user.rating)")
-                            .foregroundColor(ratingInfo.color)
-                            .font(.headline)
                     }
                 }
                 
                 Spacer()
-            }
-            
-            // Rating Info
-            HStack {
-                StatCard(
-                    title: "Rating",
-                    value: "\(user.rating)",
-                    subtitle: "Current",
-                    isRating: true
-                )
                 
-                StatCard(
-                    title: "Max Rating",
-                    value: "\(user.maxRating)",
-                    subtitle: user.maxRank,
-                    isRating: true
-                )
+                // Share button
+                Button(action: shareProfile) {
+                    Image(systemName: "square.and.arrow.up")
+                        .imageScale(.large)
+                }
+                .buttonStyle(.bordered)
             }
             
-            // Additional Info (collapsible)
-            VStack(alignment: .leading, spacing: 8) {
-                if !showAllInfo {
-                    Button("Show More...") {
-                        withAnimation {
-                            showAllInfo = true
-                        }
-                    }
-                } else {
-                    // Location Info
-                    if user.country != nil || user.city != nil {
-                        HStack {
-                            Image(systemName: "location.fill")
-                            if let country = user.country {
-                                Text(country)
-                            }
-                            if let city = user.city {
-                                Text(city)
-                            }
-                        }
-                    }
-                    
-                    // Organization
-                    if let organization = user.organization {
-                        HStack {
-                            Image(systemName: "building.2.fill")
-                            Text(organization)
-                        }
-                    }
-                    
-                    // Contribution and Friends
-                    HStack {
-                        Image(systemName: "star.fill")
-                        Text("Contribution: \(user.contribution)")
-                    }
-                    
-                    HStack {
-                        Image(systemName: "person.2.fill")
-                        Text("Friends: \(user.friendOfCount)")
-                    }
-                    
-                    Button("Show Less") {
-                        withAnimation {
-                            showAllInfo = false
-                        }
-                    }
+            // Rating cards with animation
+            HStack(spacing: 16) {
+                RatingCard(
+                    rating: user.rating,
+                    title: "Current Rating",
+                    color: ratingInfo?.color ?? .gray
+                )
+                .transition(.scale)
+                
+                RatingCard(
+                    rating: user.maxRating,
+                    title: "Max Rating",
+                    color: CodeforcesRating.getColor(for: user.maxRating)
+                )
+                .transition(.scale)
+            }
+            
+            // Additional info section
+            if showAllInfo {
+                ProfileDetailsSection(user: user)
+                    .transition(.opacity)
+            }
+            
+            Button(showAllInfo ? "Show Less" : "Show More...") {
+                withAnimation {
+                    showAllInfo.toggle()
                 }
             }
-            .padding(.top, 8)
         }
         .padding()
         .background(Color.secondarySystemBackground)
         .cornerRadius(Constants.UI.cornerRadius)
+    }
+    
+    private func shareProfile() {
+        guard let url = URL(string: "https://codeforces.com/profile/\(user.handle)") else { return }
+        let activityVC = UIActivityViewController(
+            activityItems: [url],
+            applicationActivities: nil
+        )
+        
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let window = windowScene.windows.first,
+           let rootVC = window.rootViewController {
+            rootVC.present(activityVC, animated: true)
+        }
     }
 } 
 
