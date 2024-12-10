@@ -50,8 +50,8 @@ struct SearchView: View {
                                     Text("Search for \(viewModel.searchQuery)")
                                         .fontWeight(.medium)
                                         .foregroundColor(.white)
+                                        .padding(.vertical, 8)
                                         .frame(maxWidth: .infinity)
-                                        .padding()
                                         .background(Color.blue)
                                         .cornerRadius(10)
                                 }
@@ -59,7 +59,15 @@ struct SearchView: View {
                                 .opacity(viewModel.searchQuery.isEmpty ? 0.5 : 1.0)
                                 .padding(.horizontal)
                                 
-                                UserListView(users: viewModel.searchResults)
+                                ScrollView {
+                                    LazyVStack(spacing: 8) {
+                                        ForEach(viewModel.searchResults) { user in
+                                            UserCard(user: user)
+                                                .padding(.horizontal)
+                                        }
+                                    }
+                                    .padding(.vertical, 8)
+                                }
                             }
                         }
                     }
