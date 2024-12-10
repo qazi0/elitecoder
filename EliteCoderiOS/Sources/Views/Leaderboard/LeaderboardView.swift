@@ -31,7 +31,7 @@ struct LeaderboardView: View {
                         }
                     }
                     .refreshable {
-                        await viewModel.fetchTopUsers()
+                        await viewModel.forceRefresh()
                     }
                 }
             }
