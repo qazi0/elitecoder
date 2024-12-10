@@ -82,9 +82,8 @@ struct StandingRowView: View {
                 .frame(width: 50, alignment: .leading)
                 .foregroundColor(rankColor)
             
-            Text(standing.handle)
+            Text(CodeforcesRating.formatUsername(standing.handle, rating: userRating))
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .foregroundColor(CodeforcesRating.getColor(for: userRating))
             
             Text(String(format: "%.0f", standing.points))
                 .frame(width: 80, alignment: .trailing)
