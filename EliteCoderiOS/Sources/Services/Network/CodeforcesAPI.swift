@@ -169,4 +169,64 @@ class CodeforcesAPI {
             )
         }
     }
+    
+    func fetchContestStandings(contestId: Int, from: Int = 1, count: Int = 100) async throws -> Contest.Standings {
+        guard let url = URL(string: "\(baseURL)/contest.standings?contestId=\(contestId)&from=\(from)&count=\(count)") else {
+            throw APIError.invalidURL
+        }
+        
+        let (data, response) = try await URLSession.shared.data(from: url)
+        
+        guard let httpResponse = response as? HTTPURLResponse,
+              httpResponse.statusCode == 200 else {
+            throw APIError.networkError
+        }
+        
+        struct Response: Codable {
+            let status: String
+            let result: Contest.Standings
+        }
+        
+        let decodedResponse = try JSONDecoder().decode(Response.self, from: data)
+        return decodedResponse.result
+    }
+    
+    func fetchUsers(handles: [String]) async throws -> [User] {
+        // Join handles with semicolons and limit to chunks of 100 handles
+        let handleChunks = handles.chunked(into: 100)
+        var allUsers: [User] = []
+        
+        for chunk in handleChunks {
+            let handlesString = chunk.joined(separator: ";")
+            guard let encodedHandles = handlesString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+                  let url = URL(string: "\(baseURL)/user.info?handles=\(encodedHandles)") else {
+                throw APIError.invalidURL
+            }
+            
+            let (data, response) = try await URLSession.shared.data(from: url)
+            
+            guard let httpResponse = response as? HTTPURLResponse,
+                  httpResponse.statusCode == 200 else {
+                throw APIError.networkError
+            }
+            
+            struct Response: Codable {
+                let status: String
+                let result: [User]
+            }
+            
+            let decodedResponse = try JSONDecoder().decode(Response.self, from: data)
+            allUsers.append(contentsOf: decodedResponse.result)
+        }
+        
+        return allUsers
+    }
+}
+
+private extension Array {
+    func chunked(into size: Int) -> [[Element]] {
+        stride(from: 0, to: count, by: size).map {
+            Array(self[$0 ..< Swift.min($0 + size, count)])
+        }
+    }
 } 

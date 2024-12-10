@@ -34,4 +34,49 @@ struct Contest: Codable, Identifiable {
         formatter.dateFormat = "dd/MM/yy HH:mm"
         return formatter.string(from: startDate)
     }
+}
+
+struct ContestProblem: Codable, Identifiable {
+    let contestId: Int
+    let index: String
+    let name: String
+    let type: String
+    let points: Int
+    let rating: Int?
+    
+    var id: String { "\(contestId)\(index)" }
+}
+
+struct ContestStanding: Codable, Identifiable {
+    struct Party: Codable {
+        struct Member: Codable {
+            let handle: String
+        }
+        let members: [Member]
+    }
+    
+    struct ProblemResult: Codable {
+        let points: Double
+        let rejectedAttemptCount: Int
+        let bestSubmissionTimeSeconds: Int?
+    }
+    
+    let party: Party
+    let rank: Int
+    let points: Double
+    let problemResults: [ProblemResult]
+    
+    var id: Int { rank }
+    var handle: String { party.members.first?.handle ?? "" }
+    var problemsSolved: Int {
+        problemResults.filter { $0.points > 0 }.count
+    }
+}
+
+extension Contest {
+    struct Standings: Codable {
+        let contest: Contest
+        let problems: [ContestProblem]
+        let rows: [ContestStanding]
+    }
 } 
