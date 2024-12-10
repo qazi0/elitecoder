@@ -53,6 +53,10 @@ struct ContestStanding: Codable, Identifiable {
             let handle: String
         }
         let members: [Member]
+        
+        var uniqueId: String {
+            members.map { $0.handle }.joined(separator: "_")
+        }
     }
     
     struct ProblemResult: Codable {
@@ -66,7 +70,7 @@ struct ContestStanding: Codable, Identifiable {
     let points: Double
     let problemResults: [ProblemResult]
     
-    var id: Int { rank }
+    var id: String { "\(rank)_\(party.uniqueId)" }
     var handle: String { party.members.first?.handle ?? "" }
     var problemsSolved: Int {
         problemResults.filter { $0.points > 0 }.count
