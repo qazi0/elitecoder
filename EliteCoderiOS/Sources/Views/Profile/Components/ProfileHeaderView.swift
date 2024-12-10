@@ -29,9 +29,15 @@ struct ProfileHeaderView: View {
                             .font(.headline)
                     }
                     
-                    Text(user.handle)
-                        .font(.title2)
-                        .fontWeight(.bold)
+                    HStack {
+                        if !user.countryFlag.isEmpty {
+                            Text(user.countryFlag)
+                        }
+                        
+                        Text(user.formattedHandle)
+                            .font(.title2)
+                            .fontWeight(.bold)
+                    }
                     
                     if let ratingInfo = ratingInfo {
                         if user.rating >= 2900 {
