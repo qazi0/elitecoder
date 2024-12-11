@@ -10,7 +10,7 @@ struct RatingGraphView: View {
     }
     
     private var yAxisMaxValue: Int {
-        // Add 20% buffer to the max rating for better visualization
+        // Add 5% buffer to the max rating for better visualization
         Int(Double(maxHistoricalRating) * 1.05)
     }
     
@@ -66,7 +66,7 @@ struct RatingGraphView: View {
                 }
                 .chartPlotStyle { content in
                     content
-                        .padding([.leading, .trailing], 8)
+                        .padding([.leading, .trailing], 0)
                         .background(Color.systemBackground)
                 }
                 .chartOverlay { proxy in
