@@ -1,6 +1,7 @@
 {
   "images" : [
     {
+      "filename" : "elite2-trans.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
