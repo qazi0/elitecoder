@@ -24,7 +24,6 @@ A modern, native iOS application for Codeforces - the popular competitive progra
 - Live upcoming and ongoing contest listings
 - Detailed contest standings with real-time updates
 - Contest problem sets with integrated problem viewer
-- Support for both Div. 1 and Div. 2 contests
 
 ### 👤 User Profiles
 - Comprehensive user statistics and ratings
