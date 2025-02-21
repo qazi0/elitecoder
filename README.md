@@ -4,6 +4,20 @@
 
 A modern, native iOS application for Codeforces - the popular competitive programming platform. Built with SwiftUI, featuring a clean architecture and real-time integration with the Codeforces API.
 
+## Screenshots
+
+<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+
+| Leaderboard | Problem View | User Profile |
+|-------------|--------------|--------------|
+| ![Leaderboard](./Res/preview-leaderboard.png) | ![Problem View](./Res/preview-problem-view.png) | ![User Profile](./Res/preview-user-profile.png) |
+
+| Rating Chart | User Search | Contest Lists |
+|-------------|-------------|---------------|
+| ![Rating Chart](./Res/preview-rating-chart.png) | ![User Search](./Res/preview-user-search.png) | ![Contest Lists](./Res/preview-upcoming-contests.png) |
+
+</div>
+
 ## Features
 
 ### 🏆 Contest Tracking
@@ -98,4 +112,3 @@ open EliteCoderiOSApp.xcodeproj
 - Xcode 14.0+
 - iOS 15.0+
 - Swift 5.5+
- 
