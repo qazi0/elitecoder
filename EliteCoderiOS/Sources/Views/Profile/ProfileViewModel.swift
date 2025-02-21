@@ -33,8 +33,6 @@ class ProfileViewModel: ObservableObject {
             
             // Calculate statistics
             let statistics = UserProfile.UserStatistics(
-                totalSolved: Set(submissions.filter { $0.verdict == "OK" }
-                    .map { $0.problemName }).count,
                 contestsParticipated: ratings.count,
                 maxRating: user.maxRating,
                 currentRating: user.rating,
