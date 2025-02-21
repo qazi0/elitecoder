@@ -7,18 +7,15 @@ struct UserProfile {
     let recentActivity: [Submission]
     
     struct UserStatistics {
-        let totalSolved: Int
         let contestsParticipated: Int
         let maxRating: Int
         let currentRating: Int
         let contribution: Int
         
-        init(totalSolved: Int = 0,
-             contestsParticipated: Int = 0,
+        init(contestsParticipated: Int = 0,
              maxRating: Int = 0,
              currentRating: Int = 0,
              contribution: Int = 0) {
-            self.totalSolved = totalSolved
             self.contestsParticipated = contestsParticipated
             self.maxRating = maxRating
             self.currentRating = currentRating
