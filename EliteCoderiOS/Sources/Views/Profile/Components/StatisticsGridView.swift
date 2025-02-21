@@ -9,15 +9,6 @@ struct StatisticsGridView: View {
             GridItem(.flexible())
         ], spacing: Constants.UI.defaultPadding) {
             StatCard(
-                title: "Problems Solved",
-                value: "\(statistics.totalSolved)",
-                subtitle: nil,
-                color: nil,
-                isRating: false,
-                icon: "checkmark.circle"
-            )
-            
-            StatCard(
                 title: "Current Rating",
                 value: "\(statistics.currentRating)",
                 subtitle: nil,
@@ -42,6 +33,15 @@ struct StatisticsGridView: View {
                 color: nil,
                 isRating: false,
                 icon: "flag.fill"
+            )
+            
+            StatCard(
+                title: "Contribution",
+                value: "\(statistics.contribution)",
+                subtitle: nil,
+                color: nil,
+                isRating: false,
+                icon: "arrow.up.heart.fill"
             )
         }
     }
